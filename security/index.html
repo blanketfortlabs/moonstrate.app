@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How Moonstrate keeps your cycle private | Security</title>
+  <meta name="description" content="No server, encryption on your phone with a key only you hold, three security levels, honest recovery, a decoy for the worst moment, and open code so anyone can check." />
+  <link rel="canonical" href="https://moonstrate.app/security/" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/site.css?v=9d9ef9a0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#173f38" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" content="#eef2ee" media="(prefers-color-scheme: light)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Moonstrate" />
+  <meta property="og:title" content="How Moonstrate keeps your cycle private | Security" />
+  <meta property="og:description" content="No server, encryption on your phone with a key only you hold, three security levels, honest recovery, a decoy for the worst moment, and open code so anyone can check." />
+  <meta property="og:url" content="https://moonstrate.app/security/" />
+  <meta property="og:image" content="https://moonstrate.app/moon.jpg" />
+  <meta property="og:image:width" content="720" />
+  <meta property="og:image:height" content="720" />
+  <meta property="og:image:alt" content="The Moonstrate moon, lit burnt orange along one edge on a deep green sky." />
+  <meta name="twitter:card" content="summary" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/moon.png" alt="" width="220" height="220" />Moonstrate</a>
+      <nav aria-label="Site"><a href="/learn/">Learn</a><a href="/security/" aria-current="page">Security</a><a href="/faq/">FAQ</a><a href="/about/">Our story</a></nav>
+    </div>
+  </header>
+    <main id="main">
+    <section class="prose">
+      <div class="wrap">
+        <h1 class="page-title">Private by design. Here is how.</h1>
+        <p class="lede">
+          Everything Moonstrate knows about you stays on your phone, encrypted, behind a secret
+          only you hold. This page walks through how that works, the choices you get, and where
+          the limits are.
+        </p>
+
+        <h2>Nothing on our end</h2>
+        <p>
+          There is no Moonstrate server, and there never will be. No account, no login, no sync
+          through us. A release build was checked across a full session of use and made zero
+          network connections to us. There is nothing on our side to breach, sell, subpoena, or
+          hand over, because we never have it.
+        </p>
+        <p>
+          The one thing the company does keep is its newsletter list, for people who ask to be on
+          it. It lives with our email provider, not with the app, and it is never shared or sold.
+        </p>
+
+        <h2>Encrypted on your phone with a key only you hold</h2>
+        <p>
+          Your entries live in an encrypted database on the device. The key that opens it is
+          wrapped by your secret, a PIN or a passphrase, run through argon2id, a memory-hard
+          function that makes every guess deliberately slow and expensive. The brief pause after
+          you type your secret is that protection at work, not lag. On Strong and Stronger, Face ID
+          or a fingerprint skips it day to day.
+        </p>
+        <p>
+          Someone trying to guess your PIN or passphrase on your phone gets slowed down too. After five wrong tries, the app makes them wait 30 seconds, and every wrong try after that
+          doubles the wait, up to 15 minutes.
+        </p>
+
+        <h2>Three security levels to choose&nbsp;from</h2>
+        <p>Every level encrypts your data, both in the app and in any backup you keep in your own
+          cloud. The levels differ in how hard your secret is to break, and in whether a
+          spare key exists.</p>
+        <ul>
+          <li><b>Strong.</b> A PIN of at least six digits. Day to day you can unlock with Face ID
+            or your fingerprint instead, but the PIN is what actually locks your data.</li>
+          <li><b>Stronger.</b> A passphrase instead of a PIN: a few random words, at least 15
+            characters, like <i>copper lantern orbit meadow</i>. (Pick your own words, not this
+            one.) Words are far harder to break than digits if someone takes your phone and tries
+            to break in with hacking tools, and Face ID still works day to day.</li>
+          <li><b>Strongest.</b> The same kind of passphrase, typed every time, with no Face ID or
+            fingerprint shortcut, and no spare key anywhere, not even in iCloud. Your recovery code is the only way back in if you forget your passphrase,
+            and this level also offers the decoy below.</li>
+        </ul>
+        <p>You pick at setup and can change your mind later. The choice is how hard your secret is
+          to break, and how much burden you carry for it.</p>
+
+        <h2 id="keys">How the keys work</h2>
+        <ul>
+          <li><b>The master key.</b> One random key encrypts all your data. You never see it, and
+            it's the same key on every phone you use.</li>
+          <li><b>Lockboxes.</b> The master key is stored locked inside small lockboxes, each opened
+            by something you have: one by your PIN or passphrase, one by your recovery code. Every
+            guess at a PIN or passphrase is made deliberately slow (argon2id). The lockboxes sit
+            in one record of 16 slots on your phone, mixed in with dummies, so no one can tell how
+            many are real.</li>
+          <li><b>The chip lock.</b> That whole record is locked again by a key that never leaves
+            your phone's security chip. Even if someone copies the record off the phone, every
+            guess still has to happen on that phone, where the wait between wrong tries
+            applies.</li>
+          <li><b>The Face ID shortcut.</b> A copy of the master key that your phone's chip
+            releases only for your face or fingerprint.</li>
+          <li><b>The iCloud spare key</b> (iPhone only). At Strong and Stronger, Moonstrate keeps a
+            spare key to your data in your iCloud Keychain, the part of iCloud where your iPhone
+            saves passwords. On a new iPhone, it opens your backup once you confirm it's you with
+            Face ID or your iPhone's passcode, and then you choose a new PIN or passphrase. It's on
+            unless you turn it off.
+            <p>For full transparency: Apple encrypts your Keychain end to end and doesn't hold the
+            keys, so Apple can't read it. But the spare key does exist outside your phone. If someone gets into your Apple account (it
+            takes your Apple password and the passcode of one of your devices), they could reach your
+            iCloud Keychain: this spare key, along with every password you've saved there for other
+            apps. If that worries you, turn it off, or choose Strongest,
+            which never uses it.</p></li>
+          <li><b>The backup.</b> Your data encrypted with the master key, plus lockboxes for your
+            passphrase and your recovery code. A PIN lockbox never goes into the backup: a
+            six-digit PIN has only a million combinations, and a copied file can be guessed
+            quickly, far from your phone's slowdowns.</li>
+        </ul>
+        <div class="levels-wrap" tabindex="0" role="region" aria-label="Security levels compared">
+          <table class="levels">
+            <thead>
+              <tr><th></th><th>Strong</th><th>Stronger</th><th>Strongest</th></tr>
+            </thead>
+            <tbody>
+              <tr><th>Unlocks with</th><td>PIN (6+ digits)</td><td>Passphrase (15+ characters)</td><td>Passphrase, every time</td></tr>
+              <tr><th>Face ID or fingerprint</th><td>Yes, if you allow it</td><td>Yes, if you allow it</td><td>No</td></tr>
+              <tr><th>Recovery code</th><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+              <tr><th>iCloud spare key</th><td>On by default (iPhone)</td><td>On by default (iPhone)</td><td>Never</td></tr>
+              <tr><th>Lockboxes in your backup</th><td>Recovery code only</td><td>Passphrase and recovery code</td><td>Passphrase and recovery code</td></tr>
+              <tr><th>A new phone opens your backup with</th><td>Recovery code or spare key</td><td>Passphrase, recovery code or spare key</td><td>Passphrase or recovery code</td></tr>
+              <tr><th>Decoy</th><td>No</td><td>No</td><td>Yes (the decoy never syncs)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Changing your PIN or passphrase makes a new master key, re-encrypts your data with it,
+          and gives you a new recovery code. From then on, your old PIN or passphrase and your old code open nothing new. Copies made before the change, like an older backup or a phone that synced earlier, still hold what they held.</p>
+
+        <h2>Recovery without a back door</h2>
+        <p>
+          A forgotten secret should not mean lost data, and it should not mean a reset button that
+          anyone else could press. So setup gives you a recovery code. It opens your data the same way your secret does, with
+          nothing sent anywhere and nothing held on our end. Each code works once, and using it
+          gives you a new one.
+        </p>
+
+        <h2>Your cloud. Never ours.</h2>
+        <p>
+          Backup is off until you turn it on. Without it, your data lives only on your phone, so a
+          lost or broken phone takes your history with it. Turn it on, and a copy of your data goes
+          to your own iCloud or Google Drive, encrypted before it leaves your phone. It stays in
+          your control: it never comes to us, so there is still nothing on our end.
+        </p>
+
+        <h2>A decoy for the worst moment</h2>
+        <p>
+          On the Strongest level you can set up a decoy. The first few words of your passphrase open
+          a separate, ordinary-looking version of the app, while your full passphrase keeps opening
+          your real data.
+        </p>
+        <p>
+          Say your passphrase is <i>copper lantern orbit meadow</i>. You could make
+          <i>copper lantern</i> the short version. If someone makes you unlock the app, or makes you
+          say your passphrase out loud, you give them the short version and the decoy opens. Your
+          real entries stay locked behind the words you kept back.
+        </p>
+        <p>
+          You choose what the decoy shows: Moonstrate with a little ordinary sample data, or a
+          simple moon-phase app that never reveals what Moonstrate really is. The short version
+          should sound like a whole passphrase on its own, and the hidden ending shouldn't be the
+          obvious way the phrase finishes.
+        </p>
+        <p>
+          It is built to deflect a person who is present in the moment: someone watching you
+          unlock, or demanding that you do.
+        </p>
+        <p>
+          What it does not do: defeat professional forensic tools. An examination of the phone may
+          reveal that the feature exists. And no scheme can protect someone who hands over
+          their full passphrase.
+        </p>
+
+        <h2>The small things</h2>
+        <ul>
+          <li>The app covers itself in the app switcher, so a glance at recent apps shows nothing.</li>
+          <li>The icon is a moon, not a label. Nothing on your home screen says "period tracker".</li>
+          <li>No analytics, no crash reporter, no third-party code phoning home. The only numbers we see are what the app stores'
+            built-in reporting can tell us, and none of that is tied to an individual.</li>
+          <li>The tip jar inside the app goes through Apple or Google, so we never see who tipped.</li>
+          
+        </ul>
+
+        <h2>What we don't claim</h2>
+        <ul>
+          <li>An unlocked phone with the app open is readable by whoever is holding it. Lock your
+            phone; the app locks itself a minute after you leave it.</li>
+          <li>The store knows you downloaded the app, and your phone knows it is installed. We
+            cannot hide an installation from the platform.</li>
+          <li>Security software is only as good as its last review. Ours is open for anyone to
+            read, and we will fix what people find.</li>
+        </ul>
+
+        <h2>Technical specification</h2>
+        <p class="note">The details, for the technically curious. You can check each one against the code.</p>
+        <dl class="spec">
+          <dt>Database</dt>
+          <dd>SQLite with SQLCipher 4.7.0, opened with a raw 32-byte key, so SQLCipher's own password derivation is not in the path. SQLCipher 4 defaults: AES-256 per page, authenticated with HMAC-SHA512.</dd>
+          <dt>Master key</dt>
+          <dd>32 random bytes from the platform's secure random source. Never derived from the secret; the secret only unwraps it.</dd>
+          <dt>Key derivation</dt>
+          <dd>argon2id, 3 passes, 64 MiB memory, 1 lane, 32-byte output, one 16-byte random salt per install, stored with the wrappers. Runs in a native module on both platforms, checked against a known-answer test in the build checks and in development builds.</dd>
+          <dt>Key wrapping</dt>
+          <dd>AES-256-GCM through the platform's native crypto. Every wrapper carries the same fixed label as associated data, on purpose, so nothing shows which slot holds the secret, the recovery code or the decoy.</dd>
+          <dt>Wrapper storage</dt>
+          <dd>A single fixed-size record of 16 slots in the platform secure store (iOS Keychain, Android Keystore-backed). Real wrappers are shuffled among random padding, so the record does not reveal how many secrets exist.</dd>
+          <dt>Hardware binding</dt>
+          <dd>The whole slot record is wrapped again by a key that can't be exported from the phone's security chip: the Secure Enclave on iPhone, and StrongBox on Android, or the phone's secure area (TEE) where there's no StrongBox. Every guess has to run on that phone, so a copied record is useless elsewhere. The chip key isn't tied to your face or fingerprint, so re-enrolling Face ID never locks you out.</dd>
+          <dt>Secrets</dt>
+          <dd>PIN of at least 6 digits, or passphrase of at least 15 characters, enforced at creation. Biometric unlock through the platform (Face ID, Touch ID, fingerprint) releases the same key on Strong and Stronger; Strongest always asks for the passphrase.</dd>
+          <dt>Guess throttling</dt>
+          <dd>4 free attempts, then a wait that starts at 30 seconds and doubles on every failure, capped at 15 minutes. Proving identity another way clears it.</dd>
+          <dt>Recovery code</dt>
+          <dd>128 bits of entropy plus an 8-bit checksum, shown as 28 characters of Crockford base32. Separators and case are ignored on entry. It wraps the master key like a secret does. Because it's already 128 random bits, its key comes from SHA-256 instead of argon2id.</dd>
+          <dt>Spare key</dt>
+          <dd>On by default at Strong and Stronger, and never offered at Strongest. A synchronizable iCloud Keychain item carried to your next iPhone. It holds the master key itself, and the app asks for Face ID, Touch ID or the device passcode before using it. Android has no equivalent, on purpose.</dd>
+          <dt>Decoy</dt>
+          <dd>A second secret unwraps a second master key for a separate database. Both wrappers live among the padded slots above.</dd>
+          <dt>Backup and sync</dt>
+          <dd>To your own iCloud or Google Drive only. The backup file is sealed with AES-256-GCM under your master key, and also carries that key locked under your passphrase and recovery code (never under a PIN), so a new phone can open it. Merging happens on the device, record by record.</dd>
+          <dt>Screen</dt>
+          <dd>A cover replaces the app's content whenever it goes inactive, so the app switcher shows nothing.</dd>
+          <dt>Network</dt>
+          <dd>The app connects to something outside your phone in only two cases:
+            <ul>
+              <li><b>Backup and sync:</b> to your own iCloud or Google Drive.</li>
+              <li><b>Tips:</b> if you choose to tip Blanket Fort Labs, through your phone's app store.</li>
+            </ul>
+            Otherwise, it makes no connections at all. Links you tap open in your browser, outside
+            the app. We've tested this ourselves, and we invite anyone to test it too.</dd>
+          <dt>Telemetry</dt>
+          <dd>None. No analytics, no crash reporting, and no third-party code that talks to a network, apart from the store's own billing when you tip.</dd>
+          <dt>Stack</dt>
+          <dd>Expo SDK 55, React Native 0.83, TypeScript. Licensed AGPL-3.0.</dd>
+        </dl>
+
+        <h2>And you can check</h2>
+        <p>
+          Moonstrate is open source under the AGPL-3.0, and the code will be public before launch.
+          Every claim on this page is checkable against it. If you find something wrong, tell us at
+          <a href="mailto:support@moonstrate.app">support@moonstrate.app</a>, and thank you.
+        </p>
+        <div class="actions" style="margin-top: 2rem">
+          <a
+            class="btn btn-primary"
+            href="/#follow"
+            >Get launch news</a
+          >
+          <a class="btn btn-secondary" href="/faq/">Read the FAQ</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <footer>
+    <div class="wrap">
+      <p class="soon-line">Coming soon to iPhone and Android.</p>
+      <p><a href="/#follow">Follow along by email</a>. We never share or sell email addresses. <a href="/about/#support">Support Blanket Fort Labs</a>.</p>
+      <p>
+        Moonstrate is made by <a href="https://blanketfortlabs.app/">Blanket Fort Labs</a>, an
+        Oregon benefit company. Say hello at
+        <a href="mailto:support@moonstrate.app">support@moonstrate.app</a>.
+      </p>
+      <p>This site sets no cookies, runs no scripts, and loads nothing from anyone else. The only thing it ever sends is the address you type into the email box, to our newsletter provider.</p>
+      <p>&copy; 2026 Blanket Fort Labs LLC &middot; <a href="/privacy/">Privacy policy</a> &middot; <a href="/terms/">Terms of use</a></p>
+    </div>
+  </footer>
+</body>
+</html>
