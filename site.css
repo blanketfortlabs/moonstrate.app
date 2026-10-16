@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "Kaushan Script";
-  src: url("/KaushanScript-Regular.woff2") format("woff2");
+  font-family: 'Kaushan Script';
+  src: url('/KaushanScript-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -60,10 +60,16 @@ html {
 body {
   background:
     radial-gradient(60rem 40rem at 110% -10%, var(--glow-a), transparent 60%),
-    radial-gradient(50rem 36rem at -20% 70%, var(--glow-c), transparent 60%),
-    var(--bg);
+    radial-gradient(50rem 36rem at -20% 70%, var(--glow-c), transparent 60%), var(--bg);
   color: var(--ink);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
   font-size: 1.0625rem;
   line-height: 1.6;
 }
@@ -131,11 +137,14 @@ header .wrap {
   width: 100%;
 }
 .brand {
-  font-family: "Kaushan Script", cursive;
+  font-family: 'Kaushan Script', cursive;
   font-weight: 400;
   color: var(--ink);
   text-decoration: none;
-  font-size: min(4rem, 13.5vw); /* full size from ~475px up; scales down so narrow phones don't scroll sideways */
+  font-size: min(
+    4rem,
+    13.5vw
+  ); /* full size from ~475px up; scales down so narrow phones don't scroll sideways */
   display: flex;
   align-items: center;
   gap: 0.7rem;
@@ -183,7 +192,7 @@ nav a:hover {
   }
 }
 .soon {
-  font-family: "Kaushan Script", cursive;
+  font-family: 'Kaushan Script', cursive;
   font-size: clamp(2.6rem, 6vw, 4rem);
   color: var(--soon, var(--accent));
   font-weight: 400;
@@ -338,13 +347,13 @@ h1 {
   display: none;
 }
 .faq summary::after {
-  content: "+";
+  content: '+';
   color: var(--accent-text);
   font-weight: 400;
   flex: none;
 }
 .faq details[open] summary::after {
-  content: "\2212";
+  content: '\2212';
 }
 .faq details p {
   margin-top: 0.75rem;
@@ -528,7 +537,7 @@ main > section:first-child {
   position: relative;
 }
 .cycle .s b::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0.45em;
@@ -537,10 +546,26 @@ main > section:first-child {
   border-radius: 50%;
   background: var(--dot);
 }
-.cycle .winter { --dot: #4e6f78; grid-column: 1; grid-row: 1; }
-.cycle .spring { --dot: #8fae7a; grid-column: 3; grid-row: 1; }
-.cycle .summer { --dot: #d85a30; grid-column: 3; grid-row: 2; }
-.cycle .autumn { --dot: #c98b3a; grid-column: 1; grid-row: 2; }
+.cycle .winter {
+  --dot: #4e6f78;
+  grid-column: 1;
+  grid-row: 1;
+}
+.cycle .spring {
+  --dot: #8fae7a;
+  grid-column: 3;
+  grid-row: 1;
+}
+.cycle .summer {
+  --dot: #d85a30;
+  grid-column: 3;
+  grid-row: 2;
+}
+.cycle .autumn {
+  --dot: #c98b3a;
+  grid-column: 1;
+  grid-row: 2;
+}
 
 /* wedge rhythm on desktop: seasons wide, two cells, privacy wide */
 @media (min-width: 768px) {
@@ -617,8 +642,7 @@ main > section.manifesto {
 }
 .faq details[open] {
   background:
-    radial-gradient(36rem 14rem at 100% 100%, var(--glow-b), transparent 70%),
-    var(--cell);
+    radial-gradient(36rem 14rem at 100% 100%, var(--glow-b), transparent 70%), var(--cell);
 }
 .faq details[open] summary {
   color: var(--accent-text);
